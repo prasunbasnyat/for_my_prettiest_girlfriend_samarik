@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Response</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        #container {
+            margin-top: 50px;
+            opacity: 0; /* Start with opacity 0 */
+            animation: fade-in 1s ease forwards; /* Apply fade-in animation */
+        }
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(-50px); /* Optional: Slide in from top */
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        h1 {
+            color: #e60000;
+        }
+        p {
+            font-size: 18px;
+        }
+        .option {
+            display: inline-block;
+            margin: 20px;
+            opacity: 0; /* Start with opacity 0 */
+            animation: slide-in 0.5s ease forwards; /* Apply slide-in animation */
+        }
+        @keyframes slide-in {
+            from {
+                opacity: 0;
+                transform: translateY(50px); /* Slide in from bottom */
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .option img {
+            width: 200px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        .option img:hover {
+            transform: scale(1.1);
+        }
+        #back-button {
+            position: fixed;
+            bottom: 20px;
+            left: 20px; /* Adjust the left position as needed */
+            background-color: #e60000;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            z-index: 1; /* Ensure it appears above other content */
+        }
+
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>OMFGGG, SHE SAID YES!!! HELL YEAAAHHH</h1>
+        <p>Here's a kiss, muaah!</p>
+        <p>So, your programmer bf, me obviously, has planned a mini date for him and you.</p>
+        <p>Let's start over cute little date in the order from first to last in the options below ^^ </p>
+        <div class="option">
+            <a href="memories.html">
+                <img src="memories.jpg" alt="How it started">
+                <p>1. How it started</p>
+            </a>
+        </div>
+        <div class="option">
+            <a href="miniGame.html">
+                <img src="heart.jpg" alt="Complete my heart">
+                <p>2. Complete my heart</p>
+            </a>
+        </div>
+        <div class="option">
+            <a href="stargazing.html">
+                <img src="stargazing.jpg" alt="Stargazing">
+                <p>3. Romantic Stargazing</p>
+            </a>
+        </div>
+        <div class="option">
+            <a href="https://www.youtube.com/watch?v=aqRr2TQnpPw" target="_blank">
+                <img src="music.png" alt="Music">
+                <p>4. Listen to Music Dedicated to You</p>
+            </a>
+        </div>
+        <div class="option">
+            <a href="flowers.html">
+                <img src="roses.png" alt="Roses">
+                <p>5. Final surprise for you</p>
+                <p>HAPPY VALENTINE'S DAY</p>
+            </a>
+        </div>
+        <!-- Back Button -->
+        <a id="back-button" href="valentine.html">Back</a>
+    </div>
+</body>
+</html>

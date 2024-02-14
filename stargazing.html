@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stargazing</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            perspective: 1000px;
+            color: #fff;
+            position: relative; /* Ensure relative positioning for absolute elements */
+        }
+
+        #sky {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .star {
+            position: absolute;
+            background-color: #fff;
+            width: 2px; /* Increase star width */
+            height: 2px; /* Increase star height */
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle 1s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        #message {
+            position: absolute;
+            top: 80%; /* Adjust message's position */
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Back button styles */
+        #back-button {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background-color: #e60000; /* Red button color */
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none; /* Remove default link underline */
+        }
+        #back-button:hover {
+            background-color: #cc0000; /* Darker red on hover */
+        }
+
+        /* Audio player styles */
+        audio {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Boy picture styles */
+        #boy-picture {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50%; /* Cover the bottom right half of the screen */
+            z-index: 0; /* Ensure the boy picture is behind other elements */
+        }
+    </style>
+</head>
+<body>
+    <div id="sky">
+        <!-- Stars -->
+        <script>
+            function createStar() {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+                document.getElementById('sky').appendChild(star);
+            }
+            
+            for (let i = 0; i < 200; i++) {
+                createStar();
+            }
+        </script>
+
+        <!-- Message -->
+        <div id="message">In your eyes, I see my very own universe.</div>
+    </div>
+    
+    <!-- Music player -->
+    <audio controls autoplay>
+        <source src="stargazing.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Boy picture -->
+    <img id="boy-picture" src="bf.png" alt="Boy Picture">
+    
+    <!-- Back button -->
+    <a id="back-button" href="response_yes.html">Back</a>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Response</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #fff; /* White background */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #container {
+            animation: slideIn 1s ease-out; /* Slide-in animation */
+        }
+        h1 {
+            color: #e60000;
+            font-size: 36px; /* Larger font size */
+            margin-bottom: 20px; /* Increased bottom margin */
+            animation: heartbeat 1s infinite alternate; /* Heartbeat animation */
+        }
+        p {
+            color: #333;
+            font-size: 20px; /* Larger font size */
+            margin-bottom: 10px; /* Increased bottom margin */
+            animation: fadeIn 1s ease-out; /* Fade-in animation */
+        }
+        /* Back button styles */
+        #back-button {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background-color: #e60000; /* Red button color */
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #back-button:hover {
+            background-color: #cc0000; /* Darker red on hover */
+        }
+        /* Animation keyframes */
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.1); /* Slightly larger size */
+            }
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>MAYBE?? ARE YOU SERIOUS???</h1>
+        <p>Dear cupcake,</p>
+        <p>No ifs or buts, just yes or no;)</p>
+    </div>
+    <!-- Back button -->
+    <a id="back-button" href="valentine.html">Back</a>
+</body>
+</html>
+

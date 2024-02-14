@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heart's Harmony</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f8f8;
+    }
+    #container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+    #game {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+    #left, #right {
+      width: 50vw;
+      height: 100vh;
+      position: absolute;
+      top: 0;
+      transition: transform 0.5s ease-in-out;
+    }
+    #left img, #right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    #left {
+      left: 0;
+    }
+    #right {
+      right: 0;
+    }
+    #complete-button {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #ff4081;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .dynamic-message {
+      position: absolute;
+      font-size: 24px;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 5px;
+      color: #fff;
+      z-index: 9999;
+    }
+    .left-message {
+      left: 20px;
+      background-color: #ff4081;
+      top: 20px;
+    }
+    .right-message {
+      right: 20px;
+      background-color: #4caf50;
+      top: 20px;
+    }
+    .center-message {
+      left: 50%;
+      bottom: 20%;
+      transform: translateX(-50%);
+      background-color: #2196f3;
+    }
+    .congratulation-message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      font-weight: bold;
+      color: #ff4081;
+      text-align: center;
+      z-index: 9999;
+    }
+    /* Back button styles */
+    #back-button {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      background-color: #e60000; /* Red button color */
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    #back-button:hover {
+      background-color: #cc0000; /* Darker red on hover */
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="game">
+      <div id="left"><img src="right.jpg" alt="Left Image"></div>
+      <div id="right"><img src="left.jpg" alt="Right Image"></div>
+    </div>
+    <button id="complete-button">Tap to complete his heart</button>
+  </div>
+  <!-- Audio element for tap sound -->
+  <audio id="tap-sound">
+    <source src="tap.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <!-- Audio element for heart sound -->
+  <audio id="heart-sound">
+    <source src="heart.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <!-- Audio element for finish sound -->
+  <audio id="finish-sound">
+    <source src="finish.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <script>
+    let taps = 0;
+    const maxTaps = 80;
+    const container = document.getElementById('container');
+    const completeButton = document.getElementById('complete-button');
+    const tapSound = document.getElementById('tap-sound');
+    const heartSound = document.getElementById('heart-sound');
+    const finishSound = document.getElementById('finish-sound');
+
+    function tapImage() {
+      // Play tap sound
+      tapSound.currentTime = 0;
+      tapSound.play();
+
+      if (taps < maxTaps) {
+        const distance = (taps / maxTaps) * 50.2; // Max distance to move each image
+        document.getElementById('left').style.transform = `translateX(${distance}vw)`;
+        document.getElementById('right').style.transform = `translateX(-${distance}vw)`;
+        taps++;
+
+        // Check for dynamic messages
+        if (taps === 10) {
+          showDynamicMessage('Faster', 'left', '#ff4081');
+        } else if (taps === 25) {
+          showDynamicMessage('Tap Faster Babe!!', 'right', '#4caf50');
+        } else if (taps === 40) {
+          showDynamicMessage('You Got This', 'left', '#ff4081');
+        } else if (taps === 65) {
+          showDynamicMessage('Almost Thereee', 'right', '#4caf50');
+        }
+      } else {
+        // Game completed, add completed class to container
+        container.classList.add('completed');
+
+        // Hide the complete button
+        completeButton.style.display = 'none';
+        
+        // Show congratulation message
+        const congratulationMessage = document.createElement('div');
+        congratulationMessage.textContent = "Congratulations! You completed his heart ;)";
+        congratulationMessage.classList.add('congratulation-message');
+        document.getElementById('container').appendChild(congratulationMessage);
+        
+        // Play finish sound
+        finishSound.currentTime = 0;
+        finishSound.play();
+        
+        // Play heart sound after 3 seconds
+        setTimeout(() => {
+          heartSound.currentTime = 0;
+          heartSound.play();
+        }, 3000);
+      }
+    }
+
+    function showDynamicMessage(message, position, bgColor) {
+      const dynamicMessage = document.createElement('div');
+      dynamicMessage.textContent = message;
+      dynamicMessage.classList.add('dynamic-message');
+      if (position === 'left') {
+        dynamicMessage.classList.add('left-message');
+      } else if (position === 'right') {
+        dynamicMessage.classList.add('right-message');
+      }
+      dynamicMessage.style.backgroundColor = bgColor;
+      document.getElementById('container').appendChild(dynamicMessage);
+      setTimeout(() => {
+        dynamicMessage.remove();
+      }, 3000); // Remove message after 3 seconds
+    }
+
+    completeButton.addEventListener('click', tapImage);
+  </script>
+  <!-- Back button -->
+  <a id="back-button" href="response_yes.html">Back</a>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facebook Messenger Simulation</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    .phone {
+      position: relative;
+      width: 300px;
+      height: 600px;
+      background-color: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .screen {
+      position: absolute;
+      top: 50px;
+      left: 0;
+      width: 100%;
+      height: calc(100% - 160px);
+      background-color: #f0f0f0;
+      padding: 20px;
+      overflow-y: scroll;
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 10px;
+    }
+
+    .message-container {
+      max-height: calc(100% - 20px);
+      overflow-y: auto;
+    }
+
+    .message {
+      max-width: 70%;
+      padding: 10px;
+      border-radius: 10px;
+      word-wrap: break-word;
+      margin-bottom: 10px; /* Add vertical spacing between messages */
+    }
+
+    .sent {
+      align-self: flex-start; /* Adjust alignment to the left */
+      background-color: #007bff;
+      color: white;
+      margin-left: 30%; /* Adjust the margin-left to push the text to the right */
+    }
+
+    .received {
+      align-self: flex-start;
+      background-color: #e9e9eb;
+      color: black;
+    }
+
+    .input-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 10px;
+      background-color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #message-input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 20px;
+      outline: none;
+    }
+
+    #send-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+      outline: none;
+    }
+
+    #interactive-btn {
+      position: absolute;
+      top: 40px; /* Adjust the top position to push it down */
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+      outline: none;
+    }
+
+    #user-name {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    /* Back button styles */
+    #back-button {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      background-color: #e60000; /* Red button color */
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      text-decoration: none; /* Remove default link underline */
+    }
+    #back-button:hover {
+      background-color: #cc0000; /* Darker red on hover */
+    }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <div id="user-name">Prasun</div> <!-- Your name -->
+    <div class="screen">
+      <div id="message-container" class="message-container">
+        <!-- Messages will be displayed here -->
+      </div>
+    </div>
+    <div class="input-container">
+      <input type="text" id="message-input" placeholder="Type a message...">
+      <button id="send-btn">Send</button>
+    </div>
+  </div>
+
+  <button id="interactive-btn">Start Memory</button>
+
+  <audio id="background-music" src="memories.mp3" loop></audio> <!-- Background music -->
+
+  <a id="back-button" href="response_yes.html">Back</a> <!-- Adjust href attribute as needed -->
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const messageContainer = document.getElementById('message-container');
+      const messageInput = document.getElementById('message-input');
+      const sendButton = document.getElementById('send-btn');
+      const interactiveButton = document.getElementById('interactive-btn');
+      const backgroundMusic = document.getElementById('background-music');
+
+      // Function to add a message to the conversation with a delay
+      function addDelayedMessage(sender, content, delay) {
+        setTimeout(function() {
+          addMessage(sender, content);
+        }, delay);
+      }
+
+      // Function to add a message to the conversation
+      function addMessage(sender, content) {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message', sender);
+        messageElement.innerText = content;
+        messageContainer.appendChild(messageElement);
+        messageContainer.scrollTop = messageContainer.scrollHeight;
+      }
+
+        // Simulate a conversation
+        function simulateConversation() {
+            // Clear existing messages
+            messageContainer.innerHTML = '';
+
+            // Delay for each message
+            const delays = [3000, 6000, 9000, 12000]; // milliseconds (multiplied by 3)
+
+            // Simulate conversation with cumulative delays
+            let cumulativeDelay = 0;
+            for (let i = 0; i < delays.length; i++) {
+                cumulativeDelay += delays[i];
+                if (i % 2 === 0) {
+                    addDelayedMessage('received', ['Hi', 'Can I know ur real name?'][i / 2], cumulativeDelay);
+                } else {
+                    addDelayedMessage('sent', ['hello', 'no (Your bride to be)'][(i - 1) / 2], cumulativeDelay);
+                }
+            }
+
+            // Play background music
+            backgroundMusic.play();
+        }
+
+
+      // Event listener for send button click
+      sendButton.addEventListener('click', function() {
+        const message = messageInput.value;
+        if (message.trim() === '') return;
+
+        addMessage('sent', message);
+        // Simulate receiving a reply after 1 second
+        setTimeout(function() {
+          addMessage('received', 'You are already love of his life, no need to send any further messages;)');
+        }, 1000);
+
+        messageInput.value = ''; // Clear input field after sending message
+      });
+
+      // Event listener for interactive button click
+      interactiveButton.addEventListener('click', simulateConversation);
+    });
+  </script>
+</body>
+</html>

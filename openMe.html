@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Envelope</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #envelope {
+            position: relative;
+            width: 80vw; /* 80% of viewport width */
+            height: 53.33vh; /* 80% of viewport height */
+            background-color: #ff8080; /* Red */
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 1s ease; /* Added animation for opening the envelope */
+        }
+        #envelope::before {
+            content: "";
+            position: absolute;
+            width: 60%;
+            height: 100%;
+            background-color: #ffb3b3; /* Pink */
+            top: 0;
+            right: 0;
+            border-radius: 0 20px 20px 0;
+            transition: width 0.5s ease; /* Added animation for the envelope opening */
+        }
+        #envelope.open::before {
+            width: 0; /* Shrinks the envelope when it's opened */
+        }
+        #open-button {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fff;
+            padding: 10px 20px;
+            border: 2px solid #e60000; /* Red */
+            color: #e60000;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1;
+        }
+        #card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotateY(90deg);
+            background-color: #fff;
+            width: 80%;
+            height: 80%;
+            border-radius: 10px;
+            transition: transform 1s ease; /* Slower transition */
+        }
+        #card.open {
+            transform: translate(-50%, -50%) rotateY(0deg);
+        }
+        #card-content {
+            padding: 20px;
+        }
+        #card-content a {
+            color: #e60000;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        /* Hover effect for the open button */
+        #open-button:hover {
+            background-color: #e60000;
+            color: #fff;
+        }
+        /* Animation for envelope tearing apart */
+        @keyframes envelopeTear {
+            0% {
+                width: 100%;
+            }
+            100% {
+                width: 0%;
+            }
+        }
+        .tear {
+            animation: envelopeTear 5s forwards; /* Adjusted duration to be 40% slower */
+        }
+
+    </style>
+</head>
+<body>
+    <div id="envelope">
+        <button id="open-button" onclick="openEnvelope()">Tap to Open</button>
+        <div id="card">
+            <div id="card-content">
+                <h2>Happy Valentine's Day!</h2>
+                <p>Click <a href="valentine.html" onclick="tearEnvelope()">here</a> to see your special surprise!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openEnvelope() {
+            document.getElementById("envelope").classList.add("open");
+            document.getElementById("card").classList.add("open");
+            document.getElementById("open-button").style.display = "none";
+        }
+        function tearEnvelope() {
+            document.getElementById("envelope").classList.add("tear");
+            setTimeout(function() {
+                window.location.href = "valentine.html";
+            }, 1000); // Adjust the delay according to the animation duration
+        }
+    </script>
+</body>
+</html>
